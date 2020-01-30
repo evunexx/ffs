@@ -1,0 +1,2 @@
+# ffs
+Small flask application
