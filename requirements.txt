@@ -1,0 +1,15 @@
+astroid
+Click
+Flask
+isort
+itsdangerous
+Jinja2
+lazy-object-proxy
+MarkupSafe
+mccabe
+pkg-resources
+pylint
+six
+typed-ast
+Werkzeug
+wrapt
