@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="FormWrapper">
+   <h2 class="title">Login</h2>
+   <form method="POST" action="">
+      {{form.csrf_token}}
+      <div class="form-field">{{ form.username.label }} {{form.username(size=20) }}
+         {% if form.username.errors %}
+            <ul class="errors">
+               {% for error in form.username.errors %}
+                  <li>{{ error }}</li>
+               {% endfor %}
+             </ul>
+         {% endif %}
+      </div>
+      <div class="form-field">{{ form.password.label }} {{form.password }}</div>
+         {% if form.username.errors %}
+            <ul class="errors">
+               {% for error in form.password.errors %}
+                  <li>{{ error }}</li>
+               {% endfor %}
+             </ul>
+         {% endif %}
+      {{ form.submit() }}
+   </form>
+</div>
+{% endblock %}
