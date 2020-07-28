@@ -1,6 +1,7 @@
 from flask import Flask, redirect, url_for, request, render_template, session, escape
 from flaskblog import app
-from flaskblog.forms import LoginForm
+from flaskblog.forms import LoginForm, SignupForm
+
 
 @app.route('/login', methods = ['POST', 'GET'])
 def login():
@@ -19,9 +20,9 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('login'))
     
-@app.route('/register')
+@app.route('/register', methods = ['POST', 'GET'])
 def register():
-    form = RegisterForm()
+    form = SignupForm()
     if form.validate_on_submit():
         session['username'] = form.username.data
         return redirect(url_for('login'))
