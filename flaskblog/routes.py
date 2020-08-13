@@ -1,5 +1,5 @@
 from flask import Flask, redirect, url_for, request, render_template, session, escape
-from flaskblog import app, db, bcrypt
+from flaskblog import app, db#, bcrypt
 from flaskblog.forms import LoginForm, SignupForm
 
 
@@ -25,7 +25,7 @@ def register():
     form = SignupForm()
     if form.validate_on_submit():
         session['username'] = form.username.data
-        hashed_pw =
+        hashed_pw = 'test' # Dummy
         return redirect(url_for('login'))
 
     return render_template('register.html', form=form)
