@@ -1,9 +1,21 @@
 <html>
-    <head>
-      <title>FFS</title>
-    </head>
-    <body>
-        <hr>
-        {% block content %}{% endblock %}
-    </body>
+
+<head>
+  <title>FFS</title>
+</head>
+
+<body>
+  <hr>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <ul class=flashes>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</body>
+
 </html>
