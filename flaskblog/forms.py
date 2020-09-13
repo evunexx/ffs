@@ -2,7 +2,8 @@ from flask_wtf import FlaskForm
 from wtforms import (
                     StringField, 
                     TextField, 
-                    SubmitField, 
+                    SubmitField,
+                    TextAreaField,
                     PasswordField)
 from wtforms.validators import (
                                 DataRequired, 
@@ -10,7 +11,9 @@ from wtforms.validators import (
                                 EqualTo,
                                 Email,
                                 ValidationError)
-from flaskblog.models import User
+from flask_wtf.file import FileField, FileAllowed, FileRequired
+from flaskblog import images
+from flaskblog.models import Appuser
 
 class LoginForm(FlaskForm):
 
@@ -45,14 +48,19 @@ class SignupForm(FlaskForm):
     # Checks if username already exists in Database
     def validate_username(self, username):
 
-        user = User.query.filter_by(username=username.data).first()
+        user = Appuser.query.filter_by(username=username.data).first()
         if user:
             raise ValidationError('Benutzername existiert bereits!')
 
     # Checks if email already exists in Database  
     def validate_email(self, email):
 
-        user = User.query.filter_by(email=email.data).first()
+        user = Appuser.query.filter_by(email=email.data).first()
         if user:
             raise ValidationError('E-Mail Adresse existiert bereits!')
 
+class PostForm(FlaskForm):
+    
+    training_title = TextAreaField('Training', validators= [DataRequired()])
+    training_image = FileField('Foto', validators=[FileRequired(), FileAllowed(images, 'Images only!')])
+    submit = SubmitField('Abschicken')
