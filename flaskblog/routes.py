@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, request, render_template, session, escape, flash
+from flask import Flask, redirect, url_for, request, render_template, session, escape, flash, jsonify
 from flaskblog import app, db, bcrypt, images
 from flaskblog.forms import LoginForm, SignupForm, PostForm
 from flaskblog.models import Appuser, Post
@@ -17,56 +17,37 @@ def login():
         if user and bcrypt.check_password_hash(user.password, login_form.password.data):
             login_user(user)
             # Make sure that we jump to the correct page after we login, if we come frome a login required page 
-            next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('dashboard'))
+            #next_page = request.args.get('next')
+            #return redirect(next_page) if next_page else redirect(url_for('dashboard'))
+            return redirect(url_for('dashboard'))
         else:
             flash('Login nicht erfolgreich. Bitte prüfe dein Username oder Passwort', 'danger')
-    register_form = SignupForm()
-    if register_form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(register_form.password.data).decode('utf-8')
-        user = Appuser(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
-        # Adds form data to database
-        db.session.add(user)
-        db.session.commit()
-    
-        return render_template(
-        'test_login.html', 
-        login_form = login_form,
-        register_form = register_form,
-        )
-    else:
-        flash('Registrierung nicht erfolgreich. Bitte Prüfe deine Angaben')
-    return render_template(
-        'test_login.html', 
-        login_form = login_form,
-        register_form = register_form
-        )
 
+
+    register_form = SignupForm()
+    return render_template(
+    'login.html', 
+    login_form = login_form,
+    register_form = register_form,
+    )
+
+@app.route('/view', methods = ['POST'])
+def view():
+    register_form = SignupForm()
+    if request.method == 'POST':
+        if register_form.validate():
+            hashed_password = bcrypt.generate_password_hash(register_form.password.data).decode('utf-8')
+            user = Appuser(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
+            # Adds form data to database
+            db.session.add(user)
+            db.session.commit()
+            return 'ok'    
+        return jsonify(register_form.errors), 400
 
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('login'))
-
-@app.route('/register', methods = ['POST', 'GET'])
-def register():
-    form = SignupForm()
-    if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = Appuser(username=form.username.data, email=form.email.data, password=hashed_password)
-        # Adds form data to database
-        db.session.add(user)
-        db.session.commit()
-        return redirect(url_for('login'))
-
-    return render_template('register.html', form=form)
-
-
-@app.route('/dashboard', methods = ['POST', 'GET'])
-# Make sure that we logged in here before access this page.
-@login_required
-def dashboard():
-    return render_template('dashboard.html')
 
 @app.route('/post/new', methods = ['POST', 'GET'])
 @login_required
@@ -87,3 +68,9 @@ def new_post():
         return redirect(url_for('dashboard'))
 
     return render_template('create_post.html', form=form)
+
+@app.route('/dashboard', methods = ['POST', 'GET'])
+# Make sure that we logged in here before access this page.
+#@login_required
+def dashboard():
+    return render_template('dashboard.html')

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="FormWrapper">
+    <h2 class="title">Neues Training</h2>
+    <form method="POST" action="" enctype="multipart/form-data">
+        {{form.csrf_token}}
+        <div class="form-field">{{ form.training_title.label }} {{form.training_title(size=20) }}
+            {% if form.training_title.errors %}
+            <ul class="errors">
+                {% for error in form.training_title.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <div class="form-field">{{ form.training_image.label }} {{form.training_image }}
+            {% if form.training_image.errors %}
+            <ul class="errors">
+                {% for error in form.training_image.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+        {{ form.submit() }}
+    </form>
+</div>
+
+{% endblock %}

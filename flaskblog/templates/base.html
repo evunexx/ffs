@@ -1,21 +1,18 @@
 <html>
-
 <head>
-  <title>FFS</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename = 'base.css') }}" />
 </head>
-
 <body>
-  <hr>
-  {% with messages = get_flashed_messages() %}
-  {% if messages %}
-  <ul class=flashes>
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-  {% endwith %}
-  {% block content %}{% endblock %}
+  <div class="container-preload">
+    <div class="container-content">
+      {% block content %}{% endblock %}
+      <button id="testbtn">
+        www.example.com</button>
+    </div>
+  </div>
+  <script src="{{ url_for('static', filename = 'preload.js') }}"></script>
 </body>
-
 </html>

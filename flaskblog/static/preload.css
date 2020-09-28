@@ -1,0 +1,12 @@
+.container.preload-finished:before{
+    transform: translate(100%);
+    right: 100%;
+  }
+  @media (max-width: 870px) {
+
+  .container.preload-finished:before {
+    transform: translate(-50%, 40%);
+    bottom: 90%;
+    right: initial;
+  }
+}
