@@ -4,14 +4,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="{{ url_for('static', filename = 'base.css') }}" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
   <div class="container-preload">
-    <div class="container-content">
-      {% block content %}{% endblock %}
-      <button id="testbtn">
-        www.example.com</button>
+  </div>
+  <div class="root">
+    <div class="top-container">
     </div>
+    <div class="content">
+      {% block content %}{% endblock %}
+    </div>
+    <nav class="nav">
+    <a href="#" class="nav-link">
+      <i class="fas fa-list fa-2x"></i>
+    </a>
+    <a href="#" class="nav-link">
+      <i class="fas fa-plus fa-2x"></i>
+    </a>
+    <a href="#" class="nav-link">
+      <i class="fas fa-comment fa-2x"></i>
+    </a>
+  </nav>
+
   </div>
   <script src="{{ url_for('static', filename = 'preload.js') }}"></script>
 </body>

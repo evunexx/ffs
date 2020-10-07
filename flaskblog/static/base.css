@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 body,
@@ -9,8 +10,9 @@ input {
   font-family: "Poppins", sans-serif;
 }
 
+/* transition animation */
 .container-preload:before {
-  animation: transitiont 0.75s alternate;
+  /*animation: transitiont 0.75s alternate;*/
   content: "";
   position: absolute;
   height: 2000px;
@@ -19,7 +21,7 @@ input {
   right: 100%;
   transform: translate(100%);
   background-image: linear-gradient(-45deg, #4481eb 0%, #04befe 100%);
-  transition: 1.8s ease-in-out;
+  transition: all 1.8s ease-in-out;
   border-radius: 50%;
   z-index: 6;
 }
@@ -28,6 +30,7 @@ input {
   transform: translateY(-50%);
   right: 48%;
 }
+/* -------------- */
 
 .container-preload {
   position: relative;
@@ -37,13 +40,14 @@ input {
   overflow: hidden;
 }
 
-.container-content {
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  left: 75%;
-  width: 50%;
+.container-test {
+  position: relative;
+  width: 100%;
+  background-color: #fff;
+  min-height: 100vh;
+  overflow: hidden;
 }
+
 
 @media (max-width: 870px) {
 
@@ -58,12 +62,11 @@ input {
     transition: 2s ease-in-out;
   }
 
-  .container-preload.finished:before {
-    transform: translate(-50%, 40%);
-    bottom: 90%;
-    right: initial;
+  .container.preload-finished:before{
+    transform: translate(100%);
+    right: 100%;
   }
-
+  
   .container-preload {
     min-height: 800px;
     height: 100vh;
@@ -71,18 +74,69 @@ input {
 
 }
 
-
 @media (max-width: 570px) {
 
+  .root {
+    display: grid;
+    height: 100vh;
+    position: relative;
+    grid-template-columns: 1fr;
+    grid-template-rows: 30% auto 70px;
+    grid-template-areas:
+      "header"
+      "content"
+      "nav"  
+  }
+
+  .top-container {
+    grid-area: header;
+  }
+
   .container-preload {
+    padding: 0.5rem;
+    position: absolute;
+  }
+  .content {
+    grid-area: content;
     padding: 1.5rem;
   }
 
+  /* transition animation */
   .container-preload:before {
     bottom: 72%;
-    left: 50%;
+    left: 5%;
+    transform: translatey(50%);
   }
+
+  .container-preload.finished:before {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    overflow: hidden;
+    }
+  }
+  /* -------------- */
+
+  /* Navigation Bar */
+  .nav {
+    background: #ffffff;
+    grid-area: nav;
+    /*grid-area: nav;/*
+    flex-grow: 1;
+    /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);*/
+    display: flex;
+    background: linear-gradient(-45deg, #4481eb 0%, #04befe 100%);
+    padding: none;
 
 }
 
+.nav-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    flex-grow: 1;
+    color:  white;
+}
 

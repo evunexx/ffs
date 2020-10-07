@@ -1,0 +1,72 @@
+/*.container {
+    display: grid;
+    height: 100vh;
+}
+*/
+@media (max-width: 570px) {
+    /*.container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 0.35fr auto;
+        grid-template-areas:
+            "logout"
+            "ranking"
+    }
+*/  
+
+    .table-header {
+        display: flex;
+        font-family: "Poppins", sans-serif;
+        width: 100%;
+        height: 50px;
+        font-size: 0.8rem;
+        box-shadow: 10px;
+
+    }
+
+    .header-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        -webkit-tap-highlight-color: transparent;
+        flex-grow: 1;
+    }
+
+    .table-content {
+        display: grid;
+        grid-template-columns: 79px 83px 117px 46px;
+        grid-template-rows: 40px;
+        justify-items: center;
+        grid-template-areas:
+            "rank name unit average";
+        background-color: lightgray;
+        border-radius: 55px;
+    }
+
+    .table-row {
+    }
+
+    .table-data-rank {
+        display: flex;
+        grid-area: rank;
+        align-items: center;
+    }
+
+    .table-data-name {
+        display: flex;
+        grid-area: name;
+        align-items: center;
+    }
+
+    .table-data-unit {
+        display: flex;
+        grid-area: unit;
+        align-items: center;
+    }
+
+    .table-data-average {
+        display: flex;
+        grid-area: average;
+        align-items: center;
+    }
+}
