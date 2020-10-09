@@ -4,31 +4,27 @@
   <div class="table">
     <div class="table-header">
       <div class="header-item">
-        <h2 id="rank" >Rang</h2>
+        <i class="fas fa-trophy fa-2x"></i>
       </div>
       <div class="header-item">
-        <h2 id="rank" >Name</h2>
+        <i class="fas fa-user fa-2x"></i>
       </div>
       <div class="header-item">
-        <h2 id="rank" >Einheiten</h2>
-      </div>
-      <div class="header-item">
-        <h2 id="rank" >Ø</h2>
+        <i class="fas fa-dumbbell fa-2x"></i>
       </div>
     </div>
+    {% for row in results %}
     <div class="table-content">
         <div class="table-data-rank">
           1
         </div>
         <div class="table-data-name">
-          dummy
+          <span>{{ row[0] }}</span>
         </div>
         <div class="table-data-unit">
           20
         </div>
-        <div class="table-data-average">
-          3
-        </div>
       </div>
+      {% endfor %}
   </div>
 {% endblock %}

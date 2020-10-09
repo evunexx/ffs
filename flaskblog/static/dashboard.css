@@ -12,7 +12,6 @@
             "ranking"
     }
 */  
-
     .table-header {
         display: flex;
         font-family: "Poppins", sans-serif;
@@ -34,13 +33,17 @@
 
     .table-content {
         display: grid;
-        grid-template-columns: 79px 83px 117px 46px;
+        grid-template-columns: 105px 98px 108px;
         grid-template-rows: 40px;
         justify-items: center;
         grid-template-areas:
-            "rank name unit average";
-        background-color: lightgray;
+            "rank name unit";
+        background-color: #f0f0f0;
         border-radius: 55px;
+        margin-block-end: 8px;
+        font-family: "Poppins", sans-serif;
+        font-weight: 200;
+        font-size: 1.1rem;
     }
 
     .table-row {
@@ -61,12 +64,6 @@
     .table-data-unit {
         display: flex;
         grid-area: unit;
-        align-items: center;
-    }
-
-    .table-data-average {
-        display: flex;
-        grid-area: average;
         align-items: center;
     }
 }

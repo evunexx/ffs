@@ -3,8 +3,12 @@ from flaskblog import app, db, bcrypt, images
 from flaskblog.forms import LoginForm, SignupForm, PostForm
 from flaskblog.models import Appuser, Post
 from flask_login import login_user, current_user, logout_user, login_required
+from sqlalchemy import create_engine
 import datetime
 
+
+eng = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
+con = eng.connect()
 
 @app.route('/login', methods = ['POST', 'GET'])
 def login():
@@ -73,4 +77,12 @@ def new_post():
 # Make sure that we logged in here before access this page.
 #@login_required
 def dashboard():
-    return render_template('dashboard.html')
+    rs = con.execute('''
+    select username,
+    count(post.id) 
+    from post 
+    join appuser 
+    on (post.appuser_id = appuser.id)
+    group by username order by count''')
+    results = rs.fetchall()
+    return render_template('dashboard.html', results=results)
