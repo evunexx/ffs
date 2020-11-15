@@ -61,6 +61,6 @@ class SignupForm(FlaskForm):
 
 class PostForm(FlaskForm):
     
-    training_title = TextAreaField('Training', validators= [DataRequired()])
+    training_title = StringField('Training', validators= [DataRequired()])
     training_image = FileField('Foto', validators=[FileRequired(), FileAllowed(images, 'Images only!')])
     submit = SubmitField('Abschicken')

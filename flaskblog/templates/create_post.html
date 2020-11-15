@@ -1,29 +1,39 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="FormWrapper">
-    <h2 class="title">Neues Training</h2>
-    <form method="POST" action="" enctype="multipart/form-data">
-        {{form.csrf_token}}
-        <div class="form-field">{{ form.training_title.label }} {{form.training_title(size=20) }}
-            {% if form.training_title.errors %}
-            <ul class="errors">
-                {% for error in form.training_title.errors %}
+<link rel="stylesheet" href="{{ url_for('static', filename = 'create_post.css') }}" />
+<div class="forms-container">
+    <div class="add-post">
+        <form method="POST" action="" class="add-post-form" enctype="multipart/form-data">
+            {{form.csrf_token}}
+            <h2 class="title">Neues Training</h2>
+            <div class="input-field">
+                <i class="fas fa-user"></i>
+                {{form.training_title(placeholder="Muskelgruppe", id="add-post-title") }}
+                {% if form.training_title.errors %}
+                <ul class="errors">
+                    {% for error in form.training_title.errors %}
                     <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-        </div>
-        <div class="form-field">{{ form.training_image.label }} {{form.training_image }}
-            {% if form.training_image.errors %}
-            <ul class="errors">
-                {% for error in form.training_image.errors %}
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            <div class="form-field">
+                {{form.training_image }}
+                <label for="training_image" id="upload_label">
+                    <i class="fas fa-camera fa-2x"></i>
+                </label>
+                {% if form.training_image.errors %}
+                <ul class="errors">
+                    {% for error in form.training_image.errors %}
                     <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-          </div>
-        {{ form.submit() }}
-    </form>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            {{ form.submit(class="btn solid") }}
+        </form>
+    </div>
 </div>
-
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 {% endblock %}

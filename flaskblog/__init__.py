@@ -9,7 +9,7 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 
-app.config['UPLOADED_IMAGES_DEST'] = 'uploads/images'
+app.config['UPLOADED_IMAGES_DEST'] = 'flaskblog/uploads/images'
 images = UploadSet('images', IMAGES)
 configure_uploads(app, images)
 

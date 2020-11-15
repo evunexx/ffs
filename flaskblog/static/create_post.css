@@ -1,0 +1,89 @@
+@media (max-width: 570px) {
+  .title {
+    font-family: "Poppins", sans-serif;
+    font-size: 2.2rem;
+    color: #444;
+    text-align: center;
+  }
+  /* Training Title */
+  .input-field {
+    max-width: 380px;
+    width: 100%;
+    background-color: #f0f0f0;
+    margin: 10px 0;
+    height: 55px;
+    border-radius: 55px;
+    display: grid;
+    grid-template-columns: 15% 85%;
+    padding: 0 0.4rem;
+    position: relative;
+  }
+  .input-field i {
+    text-align: center;
+    line-height: 55px;
+    color: #acacac;
+    transition: 0.5s;
+    font-size: 1.1rem;
+  }
+  .input-field input {
+    background: none;
+    outline: none;
+    border: none;
+    line-height: 1;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #333;
+  }
+  .input-field input::placeholder {
+    color: #aaa;
+    font-weight: 500;
+  }
+  /* Form-upload */
+  [type="file"] {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute !important;
+    white-space: nowrap;
+    width: 1px;
+  }
+  [type="file"]+label {
+    display: block;
+    width: 150px;
+    background-color: #5995fd;
+    border: none;
+    outline: none;
+    height: 49px;
+    border-radius: 49px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: 0.5s;
+    text-align: center;
+  }
+  .form-field>label:nth-child(2) {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .fa-camera {
+    margin-top: 8.5px;
+    margin-top: 8.5px;
+  }
+}
+
+.upload-label-selected {
+  display: flex;
+  justify-content: center;
+  font-family: "Poppins", sans-serif;
+}
+
+.fa-check {
+  margin-left: 8px;
+  color: green;
+}
+
+/* Mockup success circle /*

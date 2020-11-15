@@ -5,10 +5,6 @@
   overflow: hidden;
 }
 
-body,
-input {
-  font-family: "Poppins", sans-serif;
-}
 
 /* transition animation */
 .container-preload:before {
@@ -92,10 +88,25 @@ input {
     grid-area: header;
   }
 
+  .top-nav {
+    display: flex;
+    height: 20%;
+    justify-content: space-between;
+    padding: 0.5rem;
+  }
+
+  .fa-sign-out-alt{
+    color: white;
+    z-index: 1;
+    top: 8%;
+    padding-left: 15px;
+  }
+
   .fa-info{
     color: white;
-    position: absolute;
     z-index: 1;
+    top: 1%;
+    padding-right: 15px;
   }
 
   #logo{
@@ -113,6 +124,8 @@ input {
   .content {
     grid-area: content;
     padding: 1.5rem;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
   }
 
   /* transition animation */
@@ -142,6 +155,7 @@ input {
     display: flex;
     background: linear-gradient(-45deg, #4481eb 0%, #04befe 100%);
     padding: none;
+    overflow: hidden;
 
 }
 

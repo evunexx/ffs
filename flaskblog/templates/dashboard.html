@@ -16,13 +16,13 @@
     {% for row in results %}
     <div class="table-content">
         <div class="table-data-rank">
-          1
+          <span id="item">{{ row[2] }} </span>
         </div>
         <div class="table-data-name">
-          <span>{{ row[0] }}</span>
+          <span id="item">{{ row[0] }} </span>
         </div>
         <div class="table-data-unit">
-          20
+          <span id="item">{{ row[1] }} </span>
         </div>
       </div>
       {% endfor %}

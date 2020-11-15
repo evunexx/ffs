@@ -1,0 +1,10 @@
+ create view user_post_count as
+ select username,
+ count(post.id)
+ from post
+ join appuser
+ on (post.appuser_id = appuser.id)
+ group by username order by count desc
+ ;
+
+ 

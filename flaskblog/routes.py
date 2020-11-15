@@ -48,6 +48,15 @@ def view():
             return 'ok'    
         return jsonify(register_form.errors), 400
 
+@app.route('/process', methods = ['POST'])
+def process():
+    post_form = PostForm()
+    if request.method == 'POST':
+        if post_form.validate():
+            return 'ok'
+        return jsonify(post_form.errors)
+
+
 @app.route('/logout')
 def logout():
     logout_user()
@@ -78,11 +87,13 @@ def new_post():
 #@login_required
 def dashboard():
     rs = con.execute('''
-    select username,
-    count(post.id) 
-    from post 
-    join appuser 
-    on (post.appuser_id = appuser.id)
-    group by username order by count''')
+    select 
+      username,
+      count,
+      rank () over (
+        order by count desc
+      ) rank 
+    from 
+      user_post_count ''')
     results = rs.fetchall()
     return render_template('dashboard.html', results=results)
