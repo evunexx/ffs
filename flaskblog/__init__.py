@@ -2,16 +2,15 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-from flask_uploads import UploadSet, IMAGES, configure_uploads
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 
-app.config['UPLOADED_IMAGES_DEST'] = 'flaskblog/uploads/images'
-images = UploadSet('images', IMAGES)
-configure_uploads(app, images)
+UPLOAD_FOLDER = 'flaskblog/uploads/images'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg'])
 
 login_manager.login_view = 'login'
 login_manager.login_message = 'Bitte melden sich sich an um diesen Inhalt zu sehen.'

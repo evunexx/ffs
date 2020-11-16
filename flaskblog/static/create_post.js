@@ -5,7 +5,6 @@ $(document).ready(function(){
         $('<div class="upload-label-selected"></div>').insertAfter($(".input-field"));
         $('.upload-label-selected').append("<p>"+fileName+"<p>");
         $('.upload-label-selected').append('<i class="fas fa-check"></i>');
-        swal("Good job!", "You clicked the button!", "success");
     });
 });
 
@@ -26,25 +25,37 @@ $(document).ready(function() {
 
     $('form').on('submit', function(event) {
 
+        var form_data = new FormData( $('.add-post-form')[0]);
+
         $.ajax({
-            data : {
-                csrf_token: $('#csrf_token').val(),
-                training_title: $('#add-post-title').val(),
-                training_image: $('#training_image').val()
-            },
+            url : '/process',
             type : 'POST',
-            url : '/process'
+            dataType: 'json',
+            cache : false,
+            contentType: false,
+            processData: false,
+            data : form_data,
+            success: function (response) {
+                swal({
+                    icon: "success",
+                    title: "Erledigt",
+                    text: "Dein Training wurde erfolgreich eingereicht",
+                }).then(function() {
+                    window.location.assign("/dashboard");
+                })
+            },
+            error: function(response) {
+                var result = response.responseJSON;
+                //alert(result.responseJSON["datatype"]);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Üngültiges Foto',
+                    text: "Der Datentyp "+ "<b>"+result['datatype']+"</b>"+ " ist nicht zulässig",
+                  }).then(function() {
+                    window.location.assign("/post/new");
+                })
+            } 
         })
-        .done(function(data) {
-
-            if (data.ok) {
-                swal("OK", "Success");
-            }
-
-            else {
-                swal(data[0]);
-            }
-        });
 
         event.preventDefault();
     });

@@ -12,7 +12,6 @@ from wtforms.validators import (
                                 Email,
                                 ValidationError)
 from flask_wtf.file import FileField, FileAllowed, FileRequired
-from flaskblog import images
 from flaskblog.models import Appuser
 
 class LoginForm(FlaskForm):
@@ -26,7 +25,7 @@ class LoginForm(FlaskForm):
 class SignupForm(FlaskForm):
 
     email = StringField('Email', [
-        Email(),
+        Email(message='Ungültige Email Adresse!'),
         DataRequired()
         ])
 
@@ -39,7 +38,7 @@ class SignupForm(FlaskForm):
             ])
 
     confirmPassword = PasswordField('Passwort bestätigen', [
-            EqualTo('password'),
+            EqualTo('password', message='Passwort bestätigen stimmt nicht mit Passwort überein!'),
             DataRequired()
             ])
 
@@ -62,5 +61,5 @@ class SignupForm(FlaskForm):
 class PostForm(FlaskForm):
     
     training_title = StringField('Training', validators= [DataRequired()])
-    training_image = FileField('Foto', validators=[FileRequired(), FileAllowed(images, 'Images only!')])
+    training_image = FileField('Foto')
     submit = SubmitField('Abschicken')

@@ -1,14 +1,24 @@
 from flask import Flask, redirect, url_for, request, render_template, session, escape, flash, jsonify
-from flaskblog import app, db, bcrypt, images
+from flaskblog import app, db, bcrypt
 from flaskblog.forms import LoginForm, SignupForm, PostForm
 from flaskblog.models import Appuser, Post
 from flask_login import login_user, current_user, logout_user, login_required
 from sqlalchemy import create_engine
+from werkzeug.utils import secure_filename
+import os
+import urllib.request
 import datetime
 
 
 eng = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 con = eng.connect()
+
+#Utils (Maybe outsource Later)
+
+def allowed_file(filename):
+	return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+
+# --------
 
 @app.route('/login', methods = ['POST', 'GET'])
 def login():
@@ -35,27 +45,77 @@ def login():
     register_form = register_form,
     )
 
-@app.route('/view', methods = ['POST'])
-def view():
+@app.route('/view/register', methods = ['POST'])
+def view_register():
     register_form = SignupForm()
     if request.method == 'POST':
+
         if register_form.validate():
             hashed_password = bcrypt.generate_password_hash(register_form.password.data).decode('utf-8')
             user = Appuser(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
             # Adds form data to database
             db.session.add(user)
             db.session.commit()
-            return 'ok'    
+            resp = jsonify({'message': 'success'})
+            resp.status_code = 201
+            return resp
+
         return jsonify(register_form.errors), 400
+        
+@app.route('/view/login', methods = ['POST'])
+def view_login():
+    login_form = LoginForm()
+    if request.method == 'POST':
+        
+        if login_form.validate():
+            # Get Information from database
+            user = Appuser.query.filter_by(username=login_form.username.data).first()
+
+            # Check if User and password exists in database
+            if user and bcrypt.check_password_hash(user.password, login_form.password.data):
+                login_user(user)
+                # Make sure that we jump to the correct page after we login, if we come frome a login required page 
+                #next_page = request.args.get('next')
+                #return redirect(next_page) if next_page else redirect(url_for('dashboard'))
+                resp = jsonify({'message': 'success'})
+                resp.status_code = 201
+                return resp
+            else:
+                res.status_code = 400
+
+        return login_form.errors
+        #return jsonify(login_form.errors), 400
+
+        
 
 @app.route('/process', methods = ['POST'])
 def process():
     post_form = PostForm()
-    if request.method == 'POST':
-        if post_form.validate():
-            return 'ok'
-        return jsonify(post_form.errors)
-
+    upload_errors = {}
+    upload_done = False
+    form_validate_done = False
+    if post_form.validate():
+        form_validate_done = True
+    
+    # Access file make sure datatype is valid
+    file = request.files['training_image']
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        upload_done = True
+    else:
+        upload_errors['datatype'] = file.filename.rsplit('.', 1)[1].lower()
+    
+    if upload_done and form_validate_done:
+        resp = jsonify({'message': 'Files successfully uploaded'+ file.filename})
+        resp.status_code = 201
+        return resp
+    else:
+        resp = jsonify(
+            {**upload_errors, **post_form.errors}
+            )
+        resp.status_code = 400
+        return resp
 
 @app.route('/logout')
 def logout():
