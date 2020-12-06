@@ -157,3 +157,8 @@ def dashboard():
       user_post_count ''')
     results = rs.fetchall()
     return render_template('dashboard.html', results=results)
+
+@app.route('/history', methods = ['POST', 'GET'])
+def history():
+    posts = Post.query.all()
+    return render_template('history.html', posts=posts)

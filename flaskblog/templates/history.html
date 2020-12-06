@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename = 'history.css') }}" />
+  <div class="table">
+    <div class="table-header">
+      <div class="header-item">
+        <i class="fas fa-trophy fa-2x"></i>
+      </div>
+      <div class="header-item">
+        <i class="fas fa-user fa-2x"></i>
+      </div>
+      <div class="header-item">
+        <i class="fas fa-dumbbell fa-2x"></i>
+      </div>
+    </div>
+    {% for post in posts %} 
+    <div class="table-content">
+        <div class="date">
+           {{ post.date_posted }}
+        </div>
+        <div class="training_title">
+            {{ post.training_title }}
+        </div>
+        <div class="image_filename">
+            {{ post.image_filename }}
+        </div>
+  </div>
+  {% endfor %}
+  </div>
+{% endblock %}
