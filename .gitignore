@@ -4,5 +4,5 @@ __pycache__
 .vscode
 /uploads/*
 flaskblog/uploads/*
-flaskblog/__*
+flaskblog/__init__.py
 flaskapp.wsgi
