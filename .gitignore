@@ -4,4 +4,4 @@ __pycache__
 .vscode
 /uploads/*
 flaskblog/uploads/*
-
+flaskblog/__init__.py
