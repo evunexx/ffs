@@ -125,7 +125,7 @@
   .content {
     grid-area: content;
     padding: 1.5rem;
-    overflow: scroll;
+    overflow: hidden;
     -webkit-overflow-scrolling: touch;
   }
 

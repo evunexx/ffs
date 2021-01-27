@@ -11,12 +11,13 @@
             "logout"
             "ranking"
     }
-*/  
+*/
 
     .table {/**
         --webkit-box-shadow: -1px 3px 37px -15px rgba(163,163,163,1);
         -moz-box-shadow: -1px 3px 37px -15px rgba(163,163,163,1);
         box-shadow: -1px 3px 37px -15px rgba(163,163,163,1);**/
+        overflow: scroll;
     }
 
     .table-header {
