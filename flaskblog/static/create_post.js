@@ -36,7 +36,7 @@ $(document).ready(function() {
             processData: false,
             data : form_data,
             success: function (response) {
-                swal({
+                swal.fire({
                     icon: "success",
                     title: "Erledigt",
                     text: "Dein Training wurde erfolgreich eingereicht",
@@ -54,7 +54,7 @@ $(document).ready(function() {
                   }).then(function() {
                     window.location.assign("/post/new");
                 })
-            } 
+            }
         })
 
         event.preventDefault();
