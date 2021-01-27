@@ -44,6 +44,16 @@ $(document).ready(function() {
                     window.location.assign("/dashboard");
                 })
             },
+            statusCode: {
+                413: function() {
+                   // Only if the file is to large
+                   Swal.fire({
+                    icon: 'error',
+                    title: 'Üngültiges Foto',
+                    text: "Die Datei ist zu groß!",
+                  })
+                }
+            },
             error: function(response) {
                 var result = response.responseJSON;
                 //alert(result.responseJSON["datatype"]);
