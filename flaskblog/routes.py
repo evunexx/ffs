@@ -30,7 +30,7 @@ def login():
         # Check if User and password exists in database
         if user and bcrypt.check_password_hash(user.password, login_form.password.data):
             login_user(user)
-            # Make sure that we jump to the correct page after we login, if we come frome a login required page 
+            # Make sure that we jump to the correct page after we login, if we come frome a login required page
             #next_page = request.args.get('next')
             #return redirect(next_page) if next_page else redirect(url_for('dashboard'))
             return redirect(url_for('dashboard'))
@@ -40,7 +40,7 @@ def login():
 
     register_form = SignupForm()
     return render_template(
-    'login.html', 
+    'login.html',
     login_form = login_form,
     register_form = register_form,
     )
@@ -61,12 +61,12 @@ def view_register():
             return resp
 
         return jsonify(register_form.errors), 400
-        
+
 @app.route('/view/login', methods = ['POST'])
 def view_login():
     login_form = LoginForm()
     if request.method == 'POST':
-        
+
         if login_form.validate():
             # Get Information from database
             user = Appuser.query.filter_by(username=login_form.username.data).first()
@@ -74,7 +74,7 @@ def view_login():
             # Check if User and password exists in database
             if user and bcrypt.check_password_hash(user.password, login_form.password.data):
                 login_user(user)
-                # Make sure that we jump to the correct page after we login, if we come frome a login required page 
+                # Make sure that we jump to the correct page after we login, if we come frome a login required page
                 #next_page = request.args.get('next')
                 #return redirect(next_page) if next_page else redirect(url_for('dashboard'))
                 resp = jsonify({'message': 'success'})
@@ -86,7 +86,7 @@ def view_login():
         return login_form.errors
         #return jsonify(login_form.errors), 400
 
-        
+
 
 @app.route('/process', methods = ['POST'])
 def process():
@@ -96,7 +96,7 @@ def process():
     form_validate_done = False
     if post_form.validate():
         form_validate_done = True
-    
+
     # Access file make sure datatype is valid
     file = request.files['training_image']
     if file and allowed_file(file.filename):
@@ -105,10 +105,22 @@ def process():
         upload_done = True
     else:
         upload_errors['datatype'] = file.filename.rsplit('.', 1)[1].lower()
-    
+
     if upload_done and form_validate_done:
         resp = jsonify({'message': 'Files successfully uploaded'+ file.filename})
         resp.status_code = 201
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        post = Post(
+            training_title = post_form.training_title.data,
+            date_posted = datetime.datetime.now(),
+            image_filename = file.filename,
+            image_url = file_path,
+            author = current_user)
+        db.session.add(post)
+        db.session.commit()
+
+
+
         return resp
     else:
         resp = jsonify(
@@ -130,7 +142,7 @@ def new_post():
         filename = images.save(form.training_image.data)
         file_url = images.path(filename)
         post = Post(
-            training_title = form.training_title.data, 
+            training_title = form.training_title.data,
             date_posted = datetime.datetime.now(),
             image_filename = filename,
             image_url = file_url,
@@ -147,13 +159,13 @@ def new_post():
 #@login_required
 def dashboard():
     rs = con.execute('''
-    select 
+    select
       username,
       count,
       rank () over (
         order by count desc
-      ) rank 
-    from 
+      ) rank
+    from
       user_post_count ''')
     results = rs.fetchall()
     return render_template('dashboard.html', results=results)
