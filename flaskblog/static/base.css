@@ -62,7 +62,7 @@
     transform: translate(100%);
     right: 100%;
   }
-  
+
   .container-preload {
     min-height: 800px;
     height: 100vh;
@@ -76,12 +76,13 @@
     display: grid;
     height: 100vh;
     position: relative;
+    overflow: hidden;
     grid-template-columns: 1fr;
     grid-template-rows: 30% auto 70px;
     grid-template-areas:
       "header"
       "content"
-      "nav"  
+      "nav"
   }
 
   .top-container {
